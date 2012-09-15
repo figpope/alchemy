@@ -20,12 +20,14 @@
       });
 
       // Additional initialization code here
-      FB.Event.subscribe('auth.login', function (response) {
-        var userID = response.authResponse.userID;
-        $.post('/api/login', {
-          'userID': userID
-        });
-        return console.log(userID);
+      FB.Event.subscribe('auth.authResponseChange', function(response) {
+        if(response.status == 'connected') {
+          console.log(response);
+          $.post('/api/login', {
+            'userID': response.authResponse.userID,
+            'accessToken': response.authResponse.accessToken
+          });
+        };
       });
     };
 

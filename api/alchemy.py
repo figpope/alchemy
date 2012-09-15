@@ -1,27 +1,32 @@
-from flask import Flask
+from flask import Flask, request
 from mongoengine import *
 from docParse import processDocuments
+import os
 
 app = Flask(__name__)
 app.config["MONGODB_DB"] = "alchemy"
 app.config["SECRET_KEY"] = "(e%\+ydg$mtd&4wvzfmg-a*b@tfyz*1tn2ak(k+-&4q9=#&qpdq"
 
 db = connect(app.config["MONGODB_DB"])
+#Schemae
+class User(Document):
+  userID = StringField(required=True)
+  accessToken = StringField()
 
 @app.route('/')
 def index():
   return app.send_static_file('index.html')
 
-@app.route('/api/login', methods="POST")
+@app.route('/login', methods=["POST"])
 def login():
 	app.logger.debug(str(request.form))
-	if 'authKey' in request.form and 'userID' in request.form:
+	if 'accessToken' in request.form and 'userID' in request.form:
 	    userID = request.form['userID']
-	    authKey = request.form['authKey']
+	    accessToken = request.form['accessToken']
 	    return 'success'
-	abort(400)
+	abort(500)
 
-@app.route('/api/addDocument', methods="POST")
+@app.route('/addDocument', methods="POST")
 def addDocument():
 	app.logger.debug(str(request.form))
 	if not 'documents' in request.form:
