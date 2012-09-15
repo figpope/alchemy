@@ -15,5 +15,4 @@ angular.module("myApp", ["myApp.filters", "myApp.services", "myApp.directives"])
     controller: MyCtrl2
 
   $routeProvider.otherwise redirectTo: "/"
-  $locationProvider.html5Mode true
 ]
