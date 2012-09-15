@@ -22,10 +22,9 @@
       FB.Event.subscribe('auth.login', function (response) {
           console.log("Logged in.");
           console.log(response);
-      });
-
-      FB.Event.subscribe('auth.authResponseChange', function(response) {
-        alert('The status of the session is: ' + response.status);
+          if (window.updateFb) {
+            window.updateFb(response);
+          };
       });
     };
 
@@ -61,5 +60,6 @@
   <script src="js/controllers.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
+  <script src="js/general.js"></script>
 </body>
 </html>
