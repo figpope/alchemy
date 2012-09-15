@@ -11,3 +11,14 @@ String::linkForPositions = (positions) ->
     out = out.splice p.location + offset + p.length, 0, ']'
     console.log offset
   out
+
+  
+window.upload = (event) ->
+    $.post "localhost:5000/addDocument"
+        documents:
+            "title": data.filename
+            "FPUrl": url
+        postUpload()
+        "json"
+postUpload = () ->
+    null
