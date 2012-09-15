@@ -5,9 +5,14 @@ app = Flask(__name__)
 def index():
   return app.send_static_file('index.html')
 
-@app.route("/v1/documents/")
-def documents():
-  return ''
+@app.route('/api/login', methods="POST")
+def login():
+	app.logger.debug(str(request.form))
+	if 'authKey' in request.form and 'userID' in request.form:
+	    userID = request.form['userID']
+	    authKey = request.form['authKey']
+	    return 'success'
+	abort(400)
 
 @app.route('/static/<path:file_path>')
 def static_fetch(file_path):
