@@ -1,3 +1,3 @@
 #! /bin/bash
 git pull
-coffee -bc -o static/app/js/ static/app/coffee 
+coffee -bc -o public/app/js/ public/app/coffee
