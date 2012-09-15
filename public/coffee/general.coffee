@@ -3,3 +3,4 @@ window.updateFb = (response) ->
   $.post '/api/login', {
     'userID': userID
   }
+  console.log userID

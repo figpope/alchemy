@@ -4,20 +4,19 @@
 angular.module("myApp", ["myApp.filters", "myApp.services", "myApp.directives"]).config([
   "$routeProvider", function($routeProvider) {
     $routeProvider.when("/", {
-      templateUrl: "/static/partials/main.html",
+      templateUrl: "partials/main.html",
       controller: MainCtrl
     });
     $routeProvider.when("/view2", {
-      templateUrl: "/static/partials/partial2.html",
+      templateUrl: "partials/partial2.html",
       controller: MyCtrl2
     });
-    $routeProvider.when("/view2", {
-      templateUrl: "/static/partials/partial2.html",
+    $routeProvider.when("/filepicker", {
+      templateUrl: "partials/filepicker.html",
       controller: MyCtrl2
     });
-    $routeProvider.otherwise({
+    return $routeProvider.otherwise({
       redirectTo: "/"
     });
-    return $locationProvider.html5Mode(true);
   }
 ]);

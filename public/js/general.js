@@ -3,7 +3,8 @@
 window.updateFb = function(response) {
   var userID;
   userID = response.authResponse.userID;
-  return $.post('/api/login', {
+  $.post('/api/login', {
     'userID': userID
   });
+  return console.log(userID);
 };
