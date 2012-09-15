@@ -19,9 +19,14 @@
       });
 
       // Additional initialization code here
-      if (window.fbUpdate) {
-        window.fbUpdate();
-      };
+      FB.Event.subscribe('auth.login', function (response) {
+          console.log("Logged in.");
+          console.log(response);
+      });
+
+      FB.Event.subscribe('auth.authResponseChange', function(response) {
+        alert('The status of the session is: ' + response.status);
+      });
     };
 
     // Load the SDK Asynchronously
@@ -36,7 +41,7 @@
   <!-- FB -->
 
   <div class="login">
-    
+    <div class="fb-login-button" autologoutlink="true"></div>
   </div>
 
   <ul class="menu">
@@ -50,6 +55,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
   -->
   <script src="lib/angular/angular.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
