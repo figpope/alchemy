@@ -1,2 +1,3 @@
 .DS_Store
 public/app/js
+*.pyc
