@@ -10,10 +10,6 @@ angular.module("myApp", ["myApp.filters", "myApp.services", "myApp.directives"])
     templateUrl: "partials/start.html"
     controller: StartCtrl
 
-  $routeProvider.when "/filepicker",
-    templateUrl: "partials/filepicker.html"
-    controller: DocCtrl
-
   $routeProvider.when '/document',
     templateUrl: 'partials/document.html'
     controller: DocCtrl
