@@ -5,7 +5,8 @@ MainCtrl = ($scope, $window) ->
   $scope.loginStatus = 'loading..'
 
 StartCtrl = ($scope) ->
-  
+
+DocCtrl = ($scope) ->
 
 MyCtrl2 = ->
 

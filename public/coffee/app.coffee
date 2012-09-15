@@ -14,5 +14,9 @@ angular.module("myApp", ["myApp.filters", "myApp.services", "myApp.directives"])
     templateUrl: "partials/filepicker.html"
     controller: MyCtrl2
 
+  $routeProvider.when '/document',
+    templateUrl: 'partials/document.html'
+    controller: DocCtrl
+
   $routeProvider.otherwise redirectTo: "/"
 ]
