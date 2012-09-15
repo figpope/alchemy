@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, abort
 from mongoengine import *
 from docParse import processDocuments
 from models import *
@@ -23,7 +23,7 @@ def login():
       return 'success'
   abort(500)
 
-@app.route('/addDocument', methods="POST")
+@app.route('/addDocument', methods=["POST"])
 def addDocument():
   app.logger.debug(str(request.form))
   if not 'documents' in request.form:
