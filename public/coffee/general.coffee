@@ -6,13 +6,11 @@ String::linkForPositions = (positions) ->
   out = @
   for p in positions
     out = out.splice p.location + offset, 0, '['
-    offset += 2
-    console.log offset
-    out = out.splice p.location + offset + p.length, 0, ']'
-    console.log offset
+    out = out.splice p.location + offset + p.length + 1, 0, ']()'
+    offset += 4
   out
 
-  
+
 window.upload = (event) ->
     $.post "localhost:5000/addDocument"
         documents:
