@@ -21,9 +21,11 @@
 
       // Additional initialization code here
       FB.Event.subscribe('auth.login', function (response) {
-          if (window.updateFb) {
-            window.updateFb(response);
-          };
+        var userID = response.authResponse.userID;
+        $.post('/api/login', {
+          'userID': userID
+        });
+        return console.log(userID);
       });
     };
 
