@@ -12,7 +12,7 @@ angular.module("myApp", ["myApp.filters", "myApp.services", "myApp.directives"])
 
   $routeProvider.when "/filepicker",
     templateUrl: "partials/filepicker.html"
-    controller: MyCtrl2
+    controller: DocCtrl
 
   $routeProvider.when '/document',
     templateUrl: 'partials/document.html'
