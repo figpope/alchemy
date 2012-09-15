@@ -18,3 +18,7 @@ class Document(Document):
     FPUrl = URLField(max_length=255, required=True)
     keywords = ListField(ReferenceField(Keyword))
     concepts = ListField(ReferenceField(Concept))
+
+class User(Document):
+    userID = StringField(required=True)
+    accessToken = StringField()
