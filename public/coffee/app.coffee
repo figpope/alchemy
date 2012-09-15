@@ -7,8 +7,8 @@ angular.module("myApp", ["myApp.filters", "myApp.services", "myApp.directives"])
     controller: MainCtrl
 
   $routeProvider.when "/view2",
-    templateUrl: "partials/partial2.html"
-    controller: MyCtrl2
+    templateUrl: "partials/start.html"
+    controller: StartCtrl
 
   $routeProvider.when "/filepicker",
     templateUrl: "partials/filepicker.html"

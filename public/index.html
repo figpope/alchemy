@@ -26,6 +26,8 @@
           $.post('/api/login', {
             'userID': response.authResponse.userID,
             'accessToken': response.authResponse.accessToken
+          }, function(data){
+            window.location = "#start"
           });
         };
       });
