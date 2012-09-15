@@ -1,31 +1,20 @@
 import datetime
-from flask import url_for
-from alchemy import db
+from mongoengine import *
 
-class Document(db.Document):
-    created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
-    title = db.StringField(max_length=255, required=True)
-    FPUrl = db.URLField(max_length=255, required=True)
-    keywords = db.ListField(db.EmbeddedDocumentField('Keyword'))
-    concepts = db.ListField(db.EmbeddedDocumentField('Concept'))
+class Keyword(Document):
+    created_at = DateTimeField(default=datetime.datetime.now, required=True)
+    indices = DictField(required=True)
+    keyword = StringField(verbose_name="Keyword", required=True)
+    documents = ListField(ReferenceField(Document))
 
-    def get_absolute_url(self):
-        return url_for('post', kwargs={"slug": self.slug})
+class Concept(Document):
+    created_at = DateTimeField(default=datetime.datetime.now, required=True)
+    concept = StringField(verbose_name="Keyword", required=True)
+    documents = ListField(ReferenceField(Document))
 
-    def __unicode__(self):
-        return self.title
-
-    meta = {
-        'allow_inheritance': True,
-        'indexes': ['-created_at', 'slug'],
-        'ordering': ['-created_at']
-    }
-
-class Keyword(db.EmbeddedDocument):
-    created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
-    index = db.IntField(required=True)
-    keyword = db.StringField(verbose_name="Keyword", required=True)
-
-class Concept(db.EmbeddedDocument):
-    created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
-    concept = db.StringField(verbose_name="Keyword", required=True)
+class Document(Document):
+    created_at = DateTimeField(default=datetime.datetime.now, required=True)
+    title = StringField(max_length=255, required=True)
+    FPUrl = URLField(max_length=255, required=True)
+    keywords = ListField(ReferenceField(Keyword))
+    concepts = ListField(ReferenceField(Concept))

@@ -11,8 +11,13 @@ angular.module("myApp", ["myApp.filters", "myApp.services", "myApp.directives"])
       templateUrl: "/static/partials/partial2.html",
       controller: MyCtrl2
     });
-    return $routeProvider.otherwise({
+    $routeProvider.when("/view2", {
+      templateUrl: "/static/partials/partial2.html",
+      controller: MyCtrl2
+    });
+    $routeProvider.otherwise({
       redirectTo: "/"
     });
+    return $locationProvider.html5Mode(true);
   }
 ]);

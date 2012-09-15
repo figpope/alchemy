@@ -10,5 +10,10 @@ angular.module("myApp", ["myApp.filters", "myApp.services", "myApp.directives"])
     templateUrl: "/static/partials/partial2.html"
     controller: MyCtrl2
 
+  $routeProvider.when "/view2",
+    templateUrl: "/static/partials/partial2.html"
+    controller: MyCtrl2
+
   $routeProvider.otherwise redirectTo: "/"
+  $locationProvider.html5Mode true
 ]

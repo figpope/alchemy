@@ -1,4 +1,4 @@
-import AlchemyAPI
+import AlchemyAPI, requests, unicodedata
 from xmldict import xml_to_dict
 
 alchemyObj = AlchemyAPI.AlchemyAPI()
@@ -6,21 +6,23 @@ alchemyObj.loadAPIKey("nlpKey.txt")
 
 def processDocuments(docs):
 	processed = []
-	if isinstance(test, list):
+	if isinstance(docs, list):
 		for doc in docs:
 			keywords = getKeywords(doc)
 			concepts = getConcepts(doc)
 			keywords = locateKeywords(doc, keywords)
 			processed.append({'keywords': keywords, 'concepts': concepts})
 	else:
-		keywords = getKeywords(doc)
-		concepts = getConcepts(doc)
-		keywords = locateKeywords(doc, keywords)
+		keywords = getKeywords(docs)
+		concepts = getConcepts(docs)
+		keywords = locateKeywords(docs, keywords)
 		processed.append({'keywords': keywords, 'concepts': concepts})
 	return processed
 
 def locateKeywords(file, keywords):
-	text = open(file, 'r').read()
+	text = requests.get(file).text
+	if isinstance(text, unicode):
+		text = unicodedata.normalize('NFKD', requests.get(file).text).encode('ascii', 'ignore')
 	end = len(text)
 	for keyword in keywords:
 		indices = []
@@ -44,8 +46,10 @@ def getKeywords(file):
 	params.setMaxRetrieve(30)
 	params.setKeywordExtractMode('strict')
 
-	file = open(file, 'r')
-	result = xml_to_dict(alchemyObj.TextGetRankedKeywords(file.read(), params))
+	text = requests.get(file).text
+	if isinstance(text, unicode):
+		text = unicodedata.normalize('NFKD', requests.get(file).text).encode('ascii', 'ignore')
+	result = xml_to_dict(alchemyObj.TextGetRankedKeywords(text, params))
 	keywords = result['results']['keywords']['keyword']
 	return keywords
 
@@ -54,8 +58,10 @@ def getConcepts(file):
 	params = AlchemyAPI.AlchemyAPI_ConceptParams()
 	params.setMaxRetrieve(30)
 
-	file = open(file, 'r')
-	result = xml_to_dict(alchemyObj.TextGetRankedConcepts(file.read(), params))
+	text = requests.get(file).text
+	if isinstance(text, unicode):
+		text = unicodedata.normalize('NFKD', requests.get(file).text).encode('ascii', 'ignore')
+	result = xml_to_dict(alchemyObj.TextGetRankedConcepts(text, params))
 	keywords = result['results']['concepts']['concept']
 	temp = []
 	for result in keywords:
