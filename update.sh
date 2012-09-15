@@ -1,4 +1,4 @@
 #! /bin/bash
-git reset --hard
+git reset --HARD
 git pull
-coffee -bc -o public/app/js/ public/app/coffee
+coffee -bc -o public/js public/coffee
