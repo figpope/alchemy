@@ -20,6 +20,7 @@ def login():
   if 'accessToken' in request.form and 'userID' in request.form:
     try:
       User.objects.get(userID__exact=request.form['userID'])
+      return 'success'
     except:
       User(userID = request.form['userID'],
         accessToken = request.form['accessToken']).save()
@@ -89,16 +90,17 @@ def addDocument():
   if not 'files' in request.form:
     abort(400)
   documents = json.loads(request.form['files'])
+  session = Session.objects.get(sessionID__exact=request.form['sessionID'])
   for document in documents:
     metadata = processDocuments(document['url'])
     filename = os.path.splitext(document['data']['filename'])[0]
-    session = Session.objects.get(sessionID__exact=request.form['sessionID'])
     session.status = "Processing"
     doc = Paper(
       title = filename,
       FPUrl = document['url'],
       session = session)
     doc.save()
+    session.documents.append(doc)
     for keyword in metadata[0]['keywords']:
       try:
         key = Keyword.objects.get(keyword__iexact=keyword['text'])
@@ -124,7 +126,6 @@ def addDocument():
       con.save()
       doc.concepts.append(con)
     doc.save()
-  session = Session.objects.get(sessionID__exact=request.form['sessionID'])
   session.status = "Ready"
   return "success"
 
