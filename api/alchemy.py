@@ -101,6 +101,7 @@ def addDocument():
       session = session)
     doc.save()
     session.documents.append(doc)
+    session.save()
     for keyword in metadata[0]['keywords']:
       try:
         key = Keyword.objects.get(keyword__iexact=keyword['text'])
@@ -127,6 +128,7 @@ def addDocument():
       doc.concepts.append(con)
     doc.save()
   session.status = "Ready"
+  session.save()
   return "success"
 
 @app.route('/static/<path:file_path>')
