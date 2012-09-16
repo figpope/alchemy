@@ -33,7 +33,7 @@ def getSessions():
     abort(400)
   else:
     user = Users.objects.get(userID_exact=request.form['userID'])
-    user.
+    #user.
   pass
 
 @app.route('/getStatus', methods=["POST"])
