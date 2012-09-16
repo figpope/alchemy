@@ -1,6 +1,9 @@
 'use strict'
 
 # Controllers 
+GameCtrl = ($scope) ->
+  $scope.userPoints = 0
+
 MainCtrl = ($scope, $window) ->
 
 StartCtrl = ($scope) ->
@@ -26,14 +29,18 @@ DocCtrl = ($scope, $location, $window) ->
         'sessionID': $window.sessionID,
         (data) ->
           if data != 'ready'
-            setTimeout(poll(), 2000)
+            setTimeout( ->
+                poll()
+              2000)
           else
             getGoals()
     poll()
 
 DocsCtrl = ($scope, $routeParams) ->
   processDocument = (data) ->
-    
+    doc = data.doc.linkForPositions(data.positions)
+    converter = new Markdown.Converter()
+    $($('.document-view')[0]).html(converter.makeHtml(doc))
 
   $scope.documentID = $routeParams.documentID
   $scope.start = $window.documentGame.start
@@ -41,9 +48,8 @@ DocsCtrl = ($scope, $routeParams) ->
   $.get 'api/getDocument',
     'documentID': $scope.documentID
     processDocument(data)
-
-
-MyCtrl2 = ->
+  $.on 'click', 'div.document-view > a', (event)->
+    console.log event
 
 
 # MainCtrl.$inject = []

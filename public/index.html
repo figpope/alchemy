@@ -8,11 +8,12 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 </head>
 <body>
-  <div class="navbar">
+  <div class="navbar" ng-controller="GameCtrl">
     <div class="navbar-inner">
       <a class="brand" href="#/">Alchemy</a>
       <ul class="nav">
-        <!-- <li class="active"><a href="#/">Home</a></li> -->
+        <li class="divider-vertical"></li>
+        <li><a href=""><b>You:</b> {{userPoints}} points</a></li>
       </ul>
       <ul class="nav pull-right">
         <li>
