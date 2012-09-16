@@ -94,7 +94,7 @@ def addDocument():
       con.save()
       doc.concepts.append(con)
     doc.save()
-  return success
+  return "success"
 
 @app.route('/static/<path:file_path>')
 def static_fetch(file_path):

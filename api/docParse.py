@@ -90,7 +90,10 @@ def getKeywords(text):
 	if isinstance(text, unicode):
 		text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore')
 	result = xml_to_dict(alchemyObj.TextGetRankedKeywords(text, params))
-	keywords = result['results']['keywords']['keyword']
+	try:
+		keywords = result['results']['keywords']['keyword']
+	except:
+		keywords = None
 	return keywords
 
 def getConcepts(text):
