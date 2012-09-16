@@ -23,6 +23,31 @@ def login():
       return 'success'
   abort(500)
 
+@app.route('/getDocument', methods=["POST"])
+def getDocument():
+  pass
+
+@app.route('/getSessions', methods=["POST"])
+def getSessions():
+  if not 'userID' in request.form:
+    abort(400)
+  else:
+    user = Users.objects.get(userID_exact=request.form['userID'])
+    user.
+  pass
+
+@app.route('/getStatus', methods=["POST"])
+def getStatus():
+  pass
+
+@app.route('/getGoals', methods=["POST"])
+def getGoals():
+  pass
+
+@app.route('/updateStats', methods=["POST"])
+def updateStats():
+  pass
+
 @app.route('/addDocument', methods=["POST"])
 def addDocument():
   app.logger.debug(str(request.form))
@@ -30,7 +55,7 @@ def addDocument():
     abort(400)
   for document in request.form['documents']:
     metadata = processDocuments(document['FPUrl'])
-    doc = Document(
+    doc = Paper(
       title = request.form['filename'],
       FPUrl = request.form['FPUrl'])
     for keyword in metadata['keywords']:
