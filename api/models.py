@@ -3,7 +3,7 @@ from mongoengine import *
 
 class Session(Document):
     created_at = DateTimeField(default=datetime.datetime.now, required=True)
-    sessionID = StringField(verbose_name="Session", required=True)
+    sessionID = StringField(verbose_name="Session", required=True, unique=True)
     users = ListField(ReferenceField('User'), required=True)
     start = StringField()
     end = StringField()
@@ -32,6 +32,6 @@ class Paper(Document):
     concepts = ListField(ReferenceField(Concept))
 
 class User(Document):
-    userID = StringField(required=True)
+    userID = StringField(required=True, unique=True)
     accessToken = StringField()
     sessions = ListField(ReferenceField(Session))
