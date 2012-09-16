@@ -1,7 +1,7 @@
-import os, json, datetime, hashlib
+import os, json, datetime, hashlib, math
 from flask import Flask, request, abort, jsonify
 from mongoengine import *
-from docParse import processDocuments
+from docParse import processDocuments, link2text
 from models import *
 
 app = Flask(__name__)
@@ -25,6 +25,17 @@ def login():
 
 @app.route('/getDocument', methods=["POST"])
 def getDocument():
+  if not 'keyword' in request.form['keyword']:
+    abort(400)
+  else:
+    keyword = Keyword.objects.get(keyword__iexact=request.form['keyword'])
+    if len(keyword.documents) > 1:
+      next = keyword.documents.find().limit(-1).skip(math.floor(random()*len(keyword.documents))).next(). 
+      text = link2text(next.FPUrl)
+      keywords = []
+      for keyword in next.keywords:
+        keywords.append({'positions': keyword.indices, 'length': len(keyword.keyword)})
+    return jsonify({'text': text, 'keywords': keywords})
   pass
 
 @app.route('/getSessions', methods=["POST"])

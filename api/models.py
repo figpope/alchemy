@@ -6,6 +6,7 @@ class Session(Document):
     sessionID = StringField(verbose_name="Session", required=True, unique=True)
     users = ListField(ReferenceField('User'), required=True)
     start = StringField()
+    current = ReferenceField('Paper')
     end = StringField()
     status = StringField(default="Opened", required=True)
     documents = ListField(ReferenceField('Paper'))
