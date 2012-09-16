@@ -2,6 +2,7 @@ import os, json, datetime
 from flask import Flask, request, abort, jsonify
 from mongoengine import *
 from docParse import processDocuments, link2text
+from operator import itemgetter
 from random import randint
 from hashlib import md5
 from models import *
@@ -40,7 +41,12 @@ def getDocument():
     keywords = []
     for keyword in next.keywords:
       keywords.append({'positions': keyword.indices, 'length': len(keyword.keyword)})
-    return jsonify({'text': text, 'keywords': keywords})
+    positions = []
+    for keyword in keywords:
+      for indice in keywords['positions']:
+        positions.append({'position': indice, 'length': length})
+    locations = sorted(positions, key=itemgetter('position'))
+    return jsonify(locations)
   pass
 
 @app.route('/getSessions', methods=["POST"])

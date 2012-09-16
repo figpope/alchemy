@@ -13,7 +13,13 @@ def getAssociation(one, two):
 	association = requests.get(BASE_URL + ASSOC + REGION + one +
 		"?filter=" + REGION + two + "&limit=1")
 
-def randomWalk(database, session, steps):
+def closestMatch(database, sessionID, keyword):
 	connect(database)
 	session = Session.objects.get(sessionID__exact=session)
-	
+
+
+def randomWalk(database, sessionID, steps):
+	connect(database)
+	session = Session.objects.get(sessionID__exact=session)
+	for i in range(0, steps):
+		session.documents(randomWalk)
