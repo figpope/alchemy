@@ -15,13 +15,14 @@ class Keyword(Document):
     created_at = DateTimeField(default=datetime.datetime.now, required=True)
     session = ReferenceField(Session, required=True)
     indices = DictField(required=True)
-    keyword = StringField(verbose_name="Keyword", required=True, unique=True)
+    concept = ReferenceField('Concept')
+    keyword = StringField(verbose_name="Keyword", required=True)
     documents = ListField(ReferenceField('Paper'))
 
 class Concept(Document):
     created_at = DateTimeField(default=datetime.datetime.now, required=True)
     session = ReferenceField(Session, required=True)
-    concept = StringField(verbose_name="Concept", required=True, unique=True)
+    concept = StringField(verbose_name="Concept", required=True)
     documents = ListField(ReferenceField('Paper'))
 
 class Paper(Document):

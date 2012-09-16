@@ -57,7 +57,7 @@ DocsCtrl = ($scope, $routeParams, $window) ->
     (data)->
       processDocument(data)
     
-  $('div.document-view > a').on 'click', (event)->
+  $(document).on 'click', 'div.document-view > a', (event)->
     console.log event
 
 
