@@ -19,7 +19,7 @@ def login():
   app.logger.debug(str(request.form))
   if 'accessToken' in request.form and 'userID' in request.form:
       User.objects.get_or_create(userID = request.form['userID'],
-        accessToken = request.form['accessToken']).save()
+        accessToken = request.form['accessToken'])[0].save()
       return 'success'
   abort(500)
 
@@ -44,7 +44,12 @@ def getStatus():
     abort(400)
   else:
     session = Session.objects.get(sessionID__exact=request.form['sessionID'])
-    return session.status
+    js = json.dumps(session.status)
+
+    resp = Response(js, status=200, mimetype='application/json')
+    resp.headers['Link'] = 'http://tly.me'
+
+    return resp
 
 @app.route('/getGoals', methods=["POST"])
 def getGoals():
@@ -62,7 +67,12 @@ def createSession():
     sessionID = hashlib.md5(str(datetime.datetime.now())).hexdigest()
     session = Session(sessionID=sessionID, users=[User.objects.get(userID__exact=request.form['userID'])])
     session.save()
-    return sessionID
+    js = json.dumps(sessionID)
+
+    resp = Response(js, status=200, mimetype='application/json')
+    resp.headers['Link'] = 'http://tly.me'
+
+    return resp
 
 @app.route('/updateStats', methods=["POST"])
 def updateStats():
