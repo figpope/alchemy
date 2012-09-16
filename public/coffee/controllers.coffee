@@ -39,7 +39,7 @@ DocCtrl = ($scope, $location, $window) ->
 DocsCtrl = ($scope, $routeParams, $window) ->
   processDocument = (data) ->
     console.log data.locations
-    doc = data.text.linkForPositions(data.locations)
+    doc = $window.linkForPositions(data.text, data.locations)
     console.log(doc)
     # doc = data.text.linkForPositions ['location': 5, 'length': 10]
     converter = new Markdown.Converter()

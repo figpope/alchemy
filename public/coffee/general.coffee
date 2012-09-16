@@ -1,10 +1,11 @@
 String::splice = (idx, rem, s) ->
   @slice(0, idx) + s + @slice(idx + Math.abs(rem))
 
-String::linkForPositions = (positions) ->
+window.linkForPositions = (inS, positions) ->
   offset = 0
-  out = @
+  out = inS
   for p in positions
+    console.log p
     console.log p.position + offset
     out = out.splice p.position + offset, 0, '['
     out = out.splice p.position + offset + p.length + 1, 0, ']()'
