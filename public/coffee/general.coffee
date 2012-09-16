@@ -19,13 +19,14 @@ window.upload = (event) ->
       postUpload(),
       "json"
   createSession = (data) ->
-    $window.sessionID = data
+    window.sessionID = data
     addDocument()
 
   $.post "api/createSession", 
     'gameType': 'document'
     'userID': String(FB.getUserID()),
     createSession(data)
+  null
 
 postUpload = () ->
   $('#documents').scope().upload()
