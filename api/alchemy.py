@@ -1,8 +1,8 @@
+import os, json, datetime, hashlib
 from flask import Flask, request, abort
 from mongoengine import *
 from docParse import processDocuments
 from models import *
-import os, json
 
 app = Flask(__name__)
 app.config["MONGODB_DB"] = "alchemy"
@@ -53,6 +53,15 @@ def getGoals():
   else:
     session = Session.objects.get(sessionID__exact=request.form['sessionID'])
 
+@app.route('/createSession', methods=['POST'])
+def createSession():
+  if not 'userID' in request.form:
+    abort(400)
+  else:
+    sessionID = hashlib.md5(datetime.datetime.now).hexdigest()
+    session = Session(sessionID=sessionID, users=[User.objects.get(userID__exact=request.form['userID'])])
+    session.save()
+    return sessionID
 
 @app.route('/updateStats', methods=["POST"])
 def updateStats():

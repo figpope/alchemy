@@ -4,7 +4,7 @@ from mongoengine import *
 class Session(Document):
     created_at = DateTimeField(default=datetime.datetime.now, required=True)
     sessionID = StringField(verbose_name="Session", required=True)
-    users = ListField(ReferenceField('User'))
+    users = ListField(ReferenceField('User'), required=True)
     start = StringField()
     end = StringField()
     documents = ListField(ReferenceField('Paper'))
