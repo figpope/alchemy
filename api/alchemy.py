@@ -43,7 +43,7 @@ def getDocument():
       keywords.append({'positions': keyword.indices, 'length': len(keyword.keyword)})
     positions = []
     for keyword in keywords:
-      for indice in keywords['positions']:
+      for indice in keyword['positions']:
         positions.append({'position': indice, 'length': length})
     locations = sorted(positions, key=itemgetter('position'))
     return jsonify(locations)
