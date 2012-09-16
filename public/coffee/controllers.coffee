@@ -28,7 +28,7 @@ DocCtrl = ($scope, $location, $window) ->
       $.post 'api/getStatus',
         'sessionID': $window.sessionID,
         (data) ->
-          if data.status != 'ready'
+          if data.status != 'Ready'
             setTimeout( ->
                 poll()
               2000)

@@ -29,7 +29,7 @@ def login():
 
 @app.route('/getDocument', methods=["POST"])
 def getDocument():
-  if not 'keyword' in request.form['keyword']:
+  if not 'keyword' in request.form:
     abort(400)
   else:
     keyword = Keyword.objects.get(keyword__iexact=request.form['keyword'])
