@@ -33,14 +33,23 @@ DocCtrl = ($scope, $location, $window) ->
     createSession = (data) ->
       $window.sessionID = data
       poll()
+
+
     $.post "api/createSession", 
       'gameType': 'document'
       'userID': FB.getUserID(),
       createSession(data)
-    $location.path('/')
 
 DocsCtrl = ($scope, $routeParams) ->
+  processDocument = (data) ->
+    
+
   $scope.documentID = $routeParams.documentID
+  $scope.start = $window.documentGame.start
+  $scope.end = $window.documentGame.end
+  $.get 'api/getDocument',
+    'documentID': $scope.documentID
+    processDocument(data)
 
 
 MyCtrl2 = ->
