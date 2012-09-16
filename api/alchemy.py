@@ -75,7 +75,7 @@ def getGoals():
     goalDocs = randomwalk(app.config["MONGODB_DB"], session.sessionID, 5)
     start = goalDocs['start'].concepts[randint(0,len(goalDocs['start'].concepts)-1)]
     end = goalDocs['end'].concepts[randint(0,len(goalDocs['end'].concepts)-1)]
-    return jsonify({'goals': {'start': start, 'end': end}, 'document': link2text(goalDocs['start'].FPUrl))
+    return jsonify({'goals': {'start': start, 'end': end}, 'document': link2text(goalDocs['start'].FPUrl)})
 
 @app.route('/createSession', methods=['POST'])
 def createSession():
