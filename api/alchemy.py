@@ -1,7 +1,9 @@
-import os, json, datetime, hashlib, math
+import os, json, datetime
 from flask import Flask, request, abort, jsonify
 from mongoengine import *
 from docParse import processDocuments, link2text
+from random import randint
+from hashlib import md5
 from models import *
 
 app = Flask(__name__)
@@ -34,7 +36,7 @@ def getDocument():
   else:
     keyword = Keyword.objects.get(keyword__iexact=request.form['keyword'])
     if len(keyword.documents) > 1:
-      next = keyword.documents.find().limit(-1).skip(math.floor(random()*len(keyword.documents))).next()
+      next = keyword.documents[randint(len(keyword.documents))]
       text = link2text(next.FPUrl)
       keywords = []
       for keyword in next.keywords:
@@ -75,7 +77,7 @@ def createSession():
   if not 'userID' in request.form:
     abort(400)
   else:
-    sessionID = hashlib.md5(str(datetime.datetime.now())).hexdigest()
+    sessionID = md5(str(datetime.datetime.now())).hexdigest()
     session = Session(sessionID=sessionID, users=[User.objects.get(userID__exact=request.form['userID'])])
     session.save()
     return jsonify(sessionID=sessionID)
