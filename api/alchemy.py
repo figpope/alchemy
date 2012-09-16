@@ -18,8 +18,11 @@ def index():
 def login():
   app.logger.debug(str(request.form))
   if 'accessToken' in request.form and 'userID' in request.form:
-      User.objects.get_or_create(userID = request.form['userID'],
-        accessToken = request.form['accessToken'])[0].save()
+    try:
+      User.objects.get(userID__exact=request.form['userID'])
+    except:
+      User(userID = request.form['userID'],
+        accessToken = request.form['accessToken']).save()
       return 'success'
   abort(500)
 
@@ -30,7 +33,7 @@ def getDocument():
   else:
     keyword = Keyword.objects.get(keyword__iexact=request.form['keyword'])
     if len(keyword.documents) > 1:
-      next = keyword.documents.find().limit(-1).skip(math.floor(random()*len(keyword.documents))).next(). 
+      next = keyword.documents.find().limit(-1).skip(math.floor(random()*len(keyword.documents))).next()
       text = link2text(next.FPUrl)
       keywords = []
       for keyword in next.keywords:
@@ -63,6 +66,7 @@ def getGoals():
     abort(400)
   else:
     session = Session.objects.get(sessionID__exact=request.form['sessionID'])
+
     pass
 
 @app.route('/createSession', methods=['POST'])
@@ -89,6 +93,7 @@ def addDocument():
     metadata = processDocuments(document['url'])
     filename = os.path.splitext(document['data']['filename'])[0]
     session = Session.objects.get(sessionID__exact=request.form['sessionID'])
+    session.status = "Processing"
     doc = Paper(
       title = filename,
       FPUrl = document['url'],
@@ -119,6 +124,8 @@ def addDocument():
       con.save()
       doc.concepts.append(con)
     doc.save()
+  session = Session.objects.get(sessionID__exact=request.form['sessionID'])
+  session.status = "Ready"
   return "success"
 
 @app.route('/static/<path:file_path>')
