@@ -2,7 +2,7 @@ import os, json, datetime
 from flask import Flask, request, abort, jsonify
 from mongoengine import *
 from docParse import processDocuments, link2text
-from association import randomwalk
+from association import randomWalk
 from operator import itemgetter
 from random import randint
 from hashlib import md5
