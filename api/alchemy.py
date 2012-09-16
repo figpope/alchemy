@@ -53,7 +53,7 @@ def addDocument():
   app.logger.debug(str(request.form))
   if not 'files' in request.form:
     abort(400)
-  documents = json.load(request.form['files'])
+  documents = json.loads(request.form['files'])
   for document in documents:
     metadata = processDocuments(document['url'])
     doc = Paper(
