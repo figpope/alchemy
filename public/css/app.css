@@ -28,3 +28,7 @@
   content: "";
   padding: 0;
 }
+
+div.fb-login-button {
+  padding-top: 8px;
+}

@@ -14,5 +14,9 @@ angular.module("myApp", ["myApp.filters", "myApp.services", "myApp.directives"])
     templateUrl: 'partials/document.html'
     controller: DocCtrl
 
+  $routeProvider.when '/documents/:documentID'
+    templateUrl: 'partials/documents.html'
+    controller: DocsCtrl
+
   $routeProvider.otherwise redirectTo: "/"
 ]

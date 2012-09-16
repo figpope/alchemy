@@ -17,4 +17,4 @@ window.upload = (event) ->
     postUpload(),
     "json"
 postUpload = () ->
-  $('#documents').scope().documentUploaded = true;
+  $('#documents').scope().setUpload(true)

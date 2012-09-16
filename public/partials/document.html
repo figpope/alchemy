@@ -1,5 +1,8 @@
 <div id="documents"></div>
-<p>Upload your documents! The more, the better.</p>
-<input type="filepicker-dragdrop" data-fp-apikey="AsahPyP_yQs6krXInaLxHz" data-fp-option-container="modal" data-fp-option-multiple="true" data-fp-option-maxsize="3000000" data-fp-mimetypes="text/plain, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword" onchange="window.upload(event)">
-<script type="text/javascript" src="//api.filepicker.io/v0/filepicker.js"></script>
-<button ng-show="documentUploaded" ng-click="submit()">Submit</button>
+<h2>Upload your documents! The more, the better.</h2>
+<br>
+<div class="hero-unit">
+	<input type="filepicker-dragdrop" data-fp-apikey="AsahPyP_yQs6krXInaLxHz" data-fp-option-container="modal" data-fp-option-multiple="true" data-fp-option-maxsize="3000000" data-fp-mimetypes="text/plain, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword" onchange="window.upload(event)">
+	<script type="text/javascript" src="//api.filepicker.io/v0/filepicker.js"></script>
+	<button ng-disabled="!documentUploaded" ng-click="submit()">Submit</button>
+</div>
