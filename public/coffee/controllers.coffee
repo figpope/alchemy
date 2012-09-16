@@ -36,19 +36,26 @@ DocCtrl = ($scope, $location, $window) ->
             getGoals()
     poll()
 
-DocsCtrl = ($scope, $routeParams) ->
+DocsCtrl = ($scope, $routeParams, $window) ->
   processDocument = (data) ->
-    doc = data.doc.linkForPositions(data.positions)
+    # doc = data.text.linkForPositions(data.keywords)
+    doc = data.text.linkForPositions ['location': 5, 'length': 10]
     converter = new Markdown.Converter()
     $($('.document-view')[0]).html(converter.makeHtml(doc))
 
   $scope.documentID = $routeParams.documentID
-  $scope.start = $window.documentGame.start
-  $scope.end = $window.documentGame.end
-  $.get 'api/getDocument',
-    'documentID': $scope.documentID
-    processDocument(data)
-  $.on 'click', 'div.document-view > a', (event)->
+  $window.documentGame = {}
+  # $scope.start = $window.documentGame.start
+  # $scope.end = $window.documentGame.end
+  # $.get 'api/getDocument',
+  #   'documentID': $scope.documentID
+  #   processDocument(data)
+  $.post 'api/getDocument',
+    'keyword': 'questions',
+    (data)->
+      processDocument(data)
+    
+  $('div.document-view > a').on 'click', (event)->
     console.log event
 
 
