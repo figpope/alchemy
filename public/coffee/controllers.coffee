@@ -2,11 +2,13 @@
 
 # Controllers 
 MainCtrl = ($scope, $window) ->
-  $scope.loginStatus = 'loading..'
 
 StartCtrl = ($scope) ->
 
-DocCtrl = ($scope) ->
+DocCtrl = ($scope, $window) ->
+  $scope.documentUploaded = false;
+  $scope.submit = ->
+
 
 MyCtrl2 = ->
 

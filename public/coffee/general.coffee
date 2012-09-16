@@ -12,6 +12,9 @@ String::linkForPositions = (positions) ->
 
 
 window.upload = (event) ->
-  $.post "//tly.me/api/addDocument", event.files, postUpload(), "json"
+  $.post "api/addDocument", 
+    'files': JSON.stringify(event.files),
+    postUpload(),
+    "json"
 postUpload = () ->
-  null
+  $('#documents').scope().documentUploaded = true;
