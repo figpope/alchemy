@@ -2,7 +2,7 @@ from flask import Flask, request, abort
 from mongoengine import *
 from docParse import processDocuments
 from models import *
-import os
+import os, json
 
 app = Flask(__name__)
 app.config["MONGODB_DB"] = "alchemy"
@@ -53,7 +53,8 @@ def addDocument():
   app.logger.debug(str(request.form))
   if not 'files' in request.form:
     abort(400)
-  for document in request.form['files']:
+  documents = json.load(request.form['files'])
+  for document in documents:
     metadata = processDocuments(document['url'])
     doc = Paper(
       title = document['data']['filename'],
