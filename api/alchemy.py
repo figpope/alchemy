@@ -1,5 +1,5 @@
 import os, json, datetime, hashlib
-from flask import Flask, request, abort
+from flask import Flask, request, abort, jsonify
 from mongoengine import *
 from docParse import processDocuments
 from models import *
@@ -44,12 +44,7 @@ def getStatus():
     abort(400)
   else:
     session = Session.objects.get(sessionID__exact=request.form['sessionID'])
-    js = json.dumps(session.status)
-
-    resp = Response(js, status=200, mimetype='application/json')
-    resp.headers['Link'] = 'http://tly.me'
-
-    return resp
+    return jsonify(status=session.status)
 
 @app.route('/getGoals', methods=["POST"])
 def getGoals():
@@ -67,12 +62,7 @@ def createSession():
     sessionID = hashlib.md5(str(datetime.datetime.now())).hexdigest()
     session = Session(sessionID=sessionID, users=[User.objects.get(userID__exact=request.form['userID'])])
     session.save()
-    js = json.dumps(sessionID)
-
-    resp = Response(js, status=200, mimetype='application/json')
-    resp.headers['Link'] = 'http://tly.me'
-
-    return resp
+    return jsonify(sessionID=sessionID)
 
 @app.route('/updateStats', methods=["POST"])
 def updateStats():
