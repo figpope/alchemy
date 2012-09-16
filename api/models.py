@@ -4,23 +4,23 @@ from mongoengine import *
 class Session(Document):
     created_at = DateTimeField(default=datetime.datetime.now, required=True)
     sessionID = StringField(verbose_name="Session", required=True)
-    users = ListField(ReferenceField(User))
+    users = ListField(ReferenceField('User'))
     start = StringField()
     end = StringField()
-    documents = ListField(ReferenceField(Paper))
+    documents = ListField(ReferenceField('Paper'))
 
 class Keyword(Document):
     created_at = DateTimeField(default=datetime.datetime.now, required=True)
     session = ReferenceField(Session)
     indices = DictField(required=True)
     keyword = StringField(verbose_name="Keyword", required=True)
-    documents = ListField(ReferenceField(Paper))
+    documents = ListField(ReferenceField('Paper'))
 
 class Concept(Document):
     created_at = DateTimeField(default=datetime.datetime.now, required=True)
     session = ReferenceField(Session)
     concept = StringField(verbose_name="Concept", required=True)
-    documents = ListField(ReferenceField(Paper))
+    documents = ListField(ReferenceField('Paper'))
 
 class Paper(Document):
     created_at = DateTimeField(default=datetime.datetime.now, required=True)
