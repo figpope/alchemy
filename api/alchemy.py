@@ -51,20 +51,20 @@ def updateStats():
 @app.route('/addDocument', methods=["POST"])
 def addDocument():
   app.logger.debug(str(request.form))
-  if not 'documents' in request.form:
+  if not 'files' in request.form:
     abort(400)
-  for document in request.form['documents']:
-    metadata = processDocuments(document['FPUrl'])
+  for document in request.form['files']:
+    metadata = processDocuments(document['url'])
     doc = Paper(
-      title = request.form['filename'],
-      FPUrl = request.form['FPUrl'])
+      title = document['data']['filename'],
+      FPUrl = document['url'])
     for keyword in metadata['keywords']:
       try:
         key = Keyword.objects(keyword__iexact=keyword['text'])
         key.indices.append()
       except:
         key = Keyword(
-          indices = {request.form['filename']: keyword['position']},
+          indices = {document['data']['filename']: keyword['position']},
           keyword = keyword['text'],
           documents = [doc])
       key.save()
