@@ -18,8 +18,8 @@ def index():
 def login():
   app.logger.debug(str(request.form))
   if 'accessToken' in request.form and 'userID' in request.form:
-      userID = request.form['userID']
-      accessToken = request.form['accessToken']
+      User(userID = request.form['userID'],
+        accessToken = request.form['accessToken']).save()
       return 'success'
   abort(500)
 
