@@ -26,7 +26,7 @@ DocCtrl = ($scope, $location, $window) ->
         'sessionID': $window.sessionID,
         (data) ->
           if data != 'ready'
-            setTimeout(poll(), 2000)
+            #setTimeout(poll(), 2000)
           else
             getGoals()
 
@@ -37,7 +37,7 @@ DocCtrl = ($scope, $location, $window) ->
 
     $.post "api/createSession", 
       'gameType': 'document'
-      'userID': FB.getUserID(),
+      'userID': String(FB.getUserID()),
       createSession(data)
 
 DocsCtrl = ($scope, $routeParams) ->
