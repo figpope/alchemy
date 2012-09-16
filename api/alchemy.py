@@ -32,17 +32,27 @@ def getSessions():
   if not 'userID' in request.form:
     abort(400)
   else:
-    user = Users.objects.get(userID_exact=request.form['userID'])
-    #user.
-  pass
+    user = Users.objects.get(userID__exact=request.form['userID'])
+    sess = []
+    for sessions in user.sessions:
+      sess.append(sessions.sessionID)
+    return sess
 
 @app.route('/getStatus', methods=["POST"])
 def getStatus():
-  pass
+  if not 'sessionID' in request.form:
+    abort(400)
+  else:
+    session = Session.objects.get(sessionID__exact=request.form['sessionID'])
+    return session.status
 
 @app.route('/getGoals', methods=["POST"])
 def getGoals():
-  pass
+  if not 'sessionID' in request.form:
+    abort(400)
+  else:
+    session = Session.objects.get(sessionID__exact=request.form['sessionID'])
+
 
 @app.route('/updateStats', methods=["POST"])
 def updateStats():
@@ -56,24 +66,31 @@ def addDocument():
   documents = json.loads(request.form['files'])
   for document in documents:
     metadata = processDocuments(document['url'])
+    filename = os.path.splitext(document['data']['filename'])[0]
     doc = Paper(
-      title = document['data']['filename'],
+      title = filename,
       FPUrl = document['url'])
-    for keyword in metadata['keywords']:
+    doc.save()
+    for keyword in metadata[0]['keywords']:
       try:
-        key = Keyword.objects(keyword__iexact=keyword['text'])
-        key.indices.append()
+        key = Keyword.objects.get(keyword__iexact=keyword['text'])
+        key.indices.append({filename: keyword['position']})
+        key.documents.append(doc)
       except:
         key = Keyword(
-          indices = {document['data']['filename']: keyword['position']},
+          indices = {filename: keyword['position']},
           keyword = keyword['text'],
           documents = [doc])
       key.save()
       doc.keywords.append(key)
-    for concept in metadata['concepts']:
-      con = concept(
-        concept = concept['text'],
-        documents = [doc])
+    for concept in metadata[0]['concepts']:
+      try:
+        con = Concept.objects.get(concept__iexact=concept['text'])
+        con.documents.append(doc)
+      except:
+          con = Concept(
+            concept = concept['text'],
+            documents = [doc])
       con.save()
       doc.concepts.append(con)
     doc.save()
