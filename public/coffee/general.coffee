@@ -10,6 +10,8 @@ String::linkForPositions = (positions) ->
     offset += 4
   out
 
+postUpload = () ->
+  $('#documents').scope().upload()
 
 window.upload = (event) ->
   addDocument = () ->
@@ -19,14 +21,12 @@ window.upload = (event) ->
       postUpload(),
       "json"
   createSession = (data) ->
-    window.sessionID = data
+    window.sessionID = data.sessionID
     addDocument()
 
   $.post "api/createSession", 
     'gameType': 'document'
     'userID': String(FB.getUserID()),
-    createSession(data)
+    (data) ->
+      createSession(data)
   null
-
-postUpload = () ->
-  $('#documents').scope().upload()
