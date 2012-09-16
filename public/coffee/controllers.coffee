@@ -60,16 +60,9 @@ DocsCtrl = ($scope, $routeParams, $window) ->
     'keyword': 'single-payer health care',
     (data)->
       processDocument(data)
-<<<<<<< HEAD
-    
+
   $(document).on 'click', 'div.document-view > a', (event)->
     console.log event
-=======
-  $('div.document-view a').on 'click', (event)->
-    alert('asdf')
-    false
->>>>>>> asdf
-
 
 # MainCtrl.$inject = []
 # MyCtrl2.$inject = []
