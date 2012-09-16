@@ -40,13 +40,10 @@ def getDocument():
     text = link2text(next.FPUrl)
     keywords = []
     for keyword in next.keywords:
-      keywords.append({'positions': keyword.indices, 'length': len(keyword.keyword)})
-    positions = []
-    for keyword in keywords:
-      for indice in keyword['positions']:
-        positions.append({'position': indice, 'length': keyword['length']})
-    locations = sorted(positions, key=itemgetter('position'))
-    return jsonify(locations)
+      for index in keyword.indices.get(next.title):
+        keywords.append({'length': len(keyword.keyword), 'position': index})
+    locations = sorted(keywords, key=itemgetter('position'))
+    return jsonify({'locations':locations, 'text':text})
   pass
 
 @app.route('/getSessions', methods=["POST"])

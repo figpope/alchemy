@@ -38,8 +38,10 @@ DocCtrl = ($scope, $location, $window) ->
 
 DocsCtrl = ($scope, $routeParams, $window) ->
   processDocument = (data) ->
-    # doc = data.text.linkForPositions(data.keywords)
-    doc = data.text.linkForPositions ['location': 5, 'length': 10]
+    console.log data.locations
+    doc = data.text.linkForPositions(data.locations)
+    console.log(doc)
+    # doc = data.text.linkForPositions ['location': 5, 'length': 10]
     converter = new Markdown.Converter()
     $($('.document-view')[0]).html(converter.makeHtml(doc))
 
@@ -51,7 +53,7 @@ DocsCtrl = ($scope, $routeParams, $window) ->
   #   'documentID': $scope.documentID
   #   processDocument(data)
   $.post 'api/getDocument',
-    'keyword': 'questions',
+    'keyword': 'single-payer health care',
     (data)->
       processDocument(data)
     

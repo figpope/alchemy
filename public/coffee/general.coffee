@@ -5,8 +5,9 @@ String::linkForPositions = (positions) ->
   offset = 0
   out = @
   for p in positions
-    out = out.splice p.location + offset, 0, '['
-    out = out.splice p.location + offset + p.length + 1, 0, ']()'
+    console.log p.position + offset
+    out = out.splice p.position + offset, 0, '['
+    out = out.splice p.position + offset + p.length + 1, 0, ']()'
     offset += 4
   out
 
