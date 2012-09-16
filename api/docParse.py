@@ -93,7 +93,7 @@ def getKeywords(text):
 	try:
 		keywords = result['results']['keywords']['keyword']
 	except:
-		keywords = None
+		keywords = []
 	return keywords
 
 def getConcepts(text):
