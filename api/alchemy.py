@@ -77,10 +77,11 @@ def addDocument():
   for document in documents:
     metadata = processDocuments(document['url'])
     filename = os.path.splitext(document['data']['filename'])[0]
+    session = Session.objects.get(sessionID__exact=request.form['sessionID'])
     doc = Paper(
       title = filename,
       FPUrl = document['url'],
-      session = Session.objects.get(sessionID__exact=request.form['sessionID']))
+      session = session)
     doc.save()
     for keyword in metadata[0]['keywords']:
       try:
@@ -91,7 +92,8 @@ def addDocument():
         key = Keyword(
           indices = {filename: keyword['position']},
           keyword = keyword['text'],
-          documents = [doc])
+          documents = [doc],
+          session = session)
       key.save()
       doc.keywords.append(key)
     for concept in metadata[0]['concepts']:
@@ -101,7 +103,8 @@ def addDocument():
       except:
           con = Concept(
             concept = concept['text'],
-            documents = [doc])
+            documents = [doc],
+            session = session)
       con.save()
       doc.concepts.append(con)
     doc.save()
