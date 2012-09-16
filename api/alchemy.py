@@ -36,7 +36,7 @@ def getDocument():
   else:
     keyword = Keyword.objects.get(keyword__iexact=request.form['keyword'])
     if len(keyword.documents) > 1:
-      next = keyword.documents[randint(len(keyword.documents))]
+      next = keyword.documents[randint(0,len(keyword.documents)-1)]
       text = link2text(next.FPUrl)
       keywords = []
       for keyword in next.keywords:
