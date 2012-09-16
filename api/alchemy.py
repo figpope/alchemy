@@ -80,7 +80,7 @@ def addDocument():
     doc = Paper(
       title = filename,
       FPUrl = document['url'],
-      session = Session.objects.get(session__exact=keyword['text']))
+      session = Session.objects.get(sessionID__exact=request.form['sessionID']))
     doc.save()
     for keyword in metadata[0]['keywords']:
       try:
