@@ -12,11 +12,6 @@ String::linkForPositions = (positions) ->
 
 
 window.upload = (event) ->
-    $.post "localhost:5000/addDocument"
-        documents:
-            "title": data.filename
-            "FPUrl": url
-        postUpload()
-        "json"
+  $.post "//tly.me/api/addDocument", event.files, postUpload(), "json"
 postUpload = () ->
-    null
+  null
