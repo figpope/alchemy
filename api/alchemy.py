@@ -52,13 +52,14 @@ def getGoals():
     abort(400)
   else:
     session = Session.objects.get(sessionID__exact=request.form['sessionID'])
+    pass
 
 @app.route('/createSession', methods=['POST'])
 def createSession():
   if not 'userID' in request.form:
     abort(400)
   else:
-    sessionID = hashlib.md5(datetime.datetime.now).hexdigest()
+    sessionID = hashlib.md5(str(datetime.datetime.now())).hexdigest()
     session = Session(sessionID=sessionID, users=[User.objects.get(userID__exact=request.form['userID'])])
     session.save()
     return sessionID
@@ -78,7 +79,8 @@ def addDocument():
     filename = os.path.splitext(document['data']['filename'])[0]
     doc = Paper(
       title = filename,
-      FPUrl = document['url'])
+      FPUrl = document['url'],
+      session = Session.objects.get(session__exact=keyword['text']))
     doc.save()
     for keyword in metadata[0]['keywords']:
       try:
