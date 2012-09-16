@@ -40,10 +40,14 @@ DocsCtrl = ($scope, $routeParams, $window) ->
   processDocument = (data) ->
     console.log data.locations
     doc = $window.linkForPositions(data.text, data.locations)
-    console.log(doc)
     # doc = data.text.linkForPositions ['location': 5, 'length': 10]
     converter = new Markdown.Converter()
     $($('.document-view')[0]).html(converter.makeHtml(doc))
+    $($('.document-view a')).each (i, e) ->
+      $(e).text e.text.replace(/[^a-zA-Z 0-9]+/g,'')
+    $ ->
+      $('div.document-view a').each (i, e)->
+        $(e).attr href: 'javascript:void(0)'
 
   $scope.documentID = $routeParams.documentID
   $window.documentGame = {}
@@ -56,9 +60,15 @@ DocsCtrl = ($scope, $routeParams, $window) ->
     'keyword': 'single-payer health care',
     (data)->
       processDocument(data)
+<<<<<<< HEAD
     
   $(document).on 'click', 'div.document-view > a', (event)->
     console.log event
+=======
+  $('div.document-view a').on 'click', (event)->
+    alert('asdf')
+    false
+>>>>>>> asdf
 
 
 # MainCtrl.$inject = []
